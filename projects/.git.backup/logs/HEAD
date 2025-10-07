@@ -1,0 +1,10 @@
+0000000000000000000000000000000000000000 59f3bd3d9b3e48572c868c1bead7395183d4b24f Nick Nyburg <nick@Mac.lan> 1759098912 -0700	commit (initial): Completed cploration 0 Hello World Program
+59f3bd3d9b3e48572c868c1bead7395183d4b24f 0000000000000000000000000000000000000000 Nick Nyburg <nick@Mac.lan> 1759098948 -0700	Branch: renamed refs/heads/main to refs/heads/main
+59f3bd3d9b3e48572c868c1bead7395183d4b24f 59f3bd3d9b3e48572c868c1bead7395183d4b24f Nick Nyburg <nick@Mac.lan> 1759098948 -0700	Branch: renamed refs/heads/main to refs/heads/main
+59f3bd3d9b3e48572c868c1bead7395183d4b24f 0000000000000000000000000000000000000000 Nick Nyburg <nick@Mac.lan> 1759099862 -0700	Branch: renamed refs/heads/main to refs/heads/main
+59f3bd3d9b3e48572c868c1bead7395183d4b24f 59f3bd3d9b3e48572c868c1bead7395183d4b24f Nick Nyburg <nick@Mac.lan> 1759099862 -0700	Branch: renamed refs/heads/main to refs/heads/main
+59f3bd3d9b3e48572c868c1bead7395183d4b24f e23133fcb974a28e6c4c608cb47877d29f18c60f Nick Nyburg <nick@Mac.lan> 1759101260 -0700	commit: Re-root repo at cplorations/ and keep c00
+e23133fcb974a28e6c4c608cb47877d29f18c60f ccb5c3aaa7e458243e0a6ea19e4a228073428885 Nick Nyburg <nick@Mac.lan> 1759101455 -0700	commit: Add README with repo description
+ccb5c3aaa7e458243e0a6ea19e4a228073428885 ed04f5b38ceccc004e727eab3f58839b8ec4009c Nick Nyburg <nick@Mac.lan> 1759101550 -0700	commit: Finalized README with description
+ed04f5b38ceccc004e727eab3f58839b8ec4009c ab477e1332456b953921782f0a0272e326f4cff2 Nick Nyburg <nick@Mac.lan> 1759128017 -0700	commit: Corrected program for gradescope
+ab477e1332456b953921782f0a0272e326f4cff2 0a88fc6a4156a17142ab7e25ad0fb88e9b4c14fd Nick Nyburg <nick@10-116-30-70.wireless.oregonstate.edu> 1759261783 -0700	commit: Finalized Practice functinos
