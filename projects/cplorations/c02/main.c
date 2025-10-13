@@ -26,7 +26,9 @@
 int length(char* txt) {
 	int len = 0;
 	
-	/* REPLACE WITH YOUR CODE */
+	while (txt[len] != '\0') {
+		len++;
+	}
 
 	return len;  
 }
