@@ -77,7 +77,7 @@ void reverse(char* txt, char* result) {
 	for (int i = 0; i < n; i++) {
 		result[i] = txt[n - 1 - i];
 	}
-	
+	result[n] = '\0';
 }
 
 /* Function: vowels
