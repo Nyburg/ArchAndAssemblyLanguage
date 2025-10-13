@@ -119,9 +119,18 @@ int vowels(char* txt) {
  */
 int quartile(char* name) {
 
-	/* REPLACE WITH YOUR CODE */
-	
-	return -1; // <==fix!
+	char temp[MAX_LIMIT];
+	strcpy(temp, name);
+	temp[0] = (char)toupper((unsigned char)temp[0]);
+
+	if (strcmp(temp, "G") < 0)
+        return 1;
+    else if (strcmp(temp, "M") < 0)
+        return 2;
+    else if (strcmp(temp, "S") < 0)
+        return 3;
+    else
+        return 4;
 }
 
 
