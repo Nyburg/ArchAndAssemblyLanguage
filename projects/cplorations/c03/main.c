@@ -14,5 +14,8 @@
 
 int main(int argc, const char *argv[])
 {	
-	return 1;
+	if (argc != 2) {
+		printf("Usage %s [filename]\n,", argv[0]);
+		exit(EXIT_FAILURE);
+	}
 }
