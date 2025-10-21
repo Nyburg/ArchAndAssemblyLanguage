@@ -41,4 +41,7 @@ int main(int argc, const char *argv[])
 		printf("[%04u] %s", line_num, line);
 		fprintf(fout, "%s", line);
 	}
+	fclose(fin);
+	fclose(fout);
+	return 0;
 }
