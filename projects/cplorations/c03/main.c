@@ -12,7 +12,7 @@
 
 #define MAX_LINE_LENGTH 200
 
-int main()
+int main(int argc, const char *argv[])
 {	
 	return 1;
 }
