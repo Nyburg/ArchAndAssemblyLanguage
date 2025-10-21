@@ -23,4 +23,14 @@ int main(int argc, const char *argv[])
     	perror("Unable to open file!");
     	exit(EXIT_FAILURE);
 	}
+	char out_file[1024] = {0};
+	strncpy(out_file, argv[1], sizeof(out_file) - 1);
+	strcat(out_file, ".echo");
+
+	FILE *fout = fopen(out_file, "w+");
+	if (fout == NULL) {
+		perror("Unable to open output file!");
+		fclose(fin);
+		exit(EXIT_FAILURE);
+	}
 }
