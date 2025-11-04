@@ -52,7 +52,33 @@ void parse(FILE * file){
         if (!*line) {
             continue;
         }
-        printf("%s\n", line);
+        char inst_type = ' ';
+        if (is_Atype(line)){
+            inst_type = 'A';
+        } else if (is_label(line)) {
+            inst_type = 'L';
+        } else if (is_Ctype(line)) {
+            inst_type = 'C';
+        }
+        printf("%c  %s\n", inst_type, line);
     }
 	
+}
+
+bool is_Atype(const char *line) {
+    return line && line[0] == '@';
+}
+
+bool is_label(const char *line) {
+    if (!line || !*line) return false;
+    size_t len = strlen(line);
+    if (len < 2) return false;
+    return line[0] == '(' && line[len - 1] == ')';
+}
+
+bool is_Ctype(const char *line) {
+    if (!line || !*line) return false;
+    if (is_Atype(line)) return false;
+    if (is_label(line)) return false;
+    return true;
 }
