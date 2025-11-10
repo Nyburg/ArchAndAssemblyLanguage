@@ -35,6 +35,33 @@ char *strip(char *s){
     return s;	
 }
 
+/* Function: extract_label
+ * -------------
+ * expects a label declaration
+ *
+ *  Writes LABEL into label and returns it
+ */
+char *extract_label(const char *line, char *label) {
+    const unsigned char *p = (const unsigned char *)line;
+
+    // skip leading spaces
+    while (*p && isspace(*p)) p++;
+
+    // skip '(' if present
+    if (*p == '(') p++;
+
+    // copy until ')' or EOL
+    const unsigned char *start = p;
+    while (*p && *p != ')' && *p != '\n' && *p != '\r') p++;
+
+    size_t len = (size_t)(p - start);
+    if (len > (size_t)MAX_LABEL_LENGTH) len = (size_t)MAX_LABEL_LENGTH;
+
+    memcpy(label, start, len);
+    label[len] = '\0';
+    return label;
+}
+
 /* Function: parse
  * -------------
  * iterate each line in the file and strip whitespace and comments. 
