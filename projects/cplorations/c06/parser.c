@@ -84,6 +84,9 @@ void parse(FILE * file){
             inst_type = 'A';
         } else if (is_label(line)) {
             inst_type = 'L';
+            char lbl[MAX_LABEL_LENGTH + 1];
+            extract_label(line, lbl);
+            strcpy(line, lbl);
         } else if (is_Ctype(line)) {
             inst_type = 'C';
         }
