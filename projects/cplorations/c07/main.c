@@ -22,6 +22,7 @@ int main(int argc, const char *argv[])
 	}
 
 	parse(fp);
+	symtable_print_labels();
 	fclose(fp);
 	return 0;
 			
