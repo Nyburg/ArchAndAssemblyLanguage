@@ -73,24 +73,26 @@ char *extract_label(const char *line, char *label) {
 void parse(FILE * file){
 	
 	char line[MAX_LINE_LENGTH];
+    hack_addr rom_addr = 0;
 
     while (fgets(line, sizeof(line), file) != NULL) {
         strip(line);
         if (!*line) {
             continue;
         }
-        char inst_type = ' ';
-        if (is_Atype(line)){
-            inst_type = 'A';
-        } else if (is_label(line)) {
-            inst_type = 'L';
+        if (is_label(line)){
             char lbl[MAX_LABEL_LENGTH + 1];
             extract_label(line, lbl);
-            strcpy(line, lbl);
-        } else if (is_Ctype(line)) {
-            inst_type = 'C';
+            strcopy(line, lbl);
+            symtable_insert(lbl, rom_addr);
         }
-        printf("%c  %s\n", inst_type, line);
+        else if (is_Atype(line)){
+            rom_addr++;
+        }
+        else if (is_Ctype(line)) {
+            rom_addr++;
+        }
+        //printf("%c  %s\n", inst_type, line);
     }
 	
 }

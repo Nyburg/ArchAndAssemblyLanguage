@@ -11,6 +11,7 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include "symtable.h"
 
 #define MAX_LINE_LENGTH  200
 #define MAX_LABEL_LENGTH (MAX_LINE_LENGTH - 2)
