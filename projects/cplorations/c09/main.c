@@ -1,5 +1,5 @@
 /****************************************
- * C-ploration 8 for CS 271
+ * C-ploration 9 for CS 271
  * 
  * [NAME] Nicholas Nyburg
  * [TERM] FALL 2025
@@ -21,6 +21,9 @@ int main(int argc, const char *argv[])
 	}
 
 	parse(fp);
+
+	symtable_print_labels();
+
 	fclose(fp);
 	return 0;
 			

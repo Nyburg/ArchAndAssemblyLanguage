@@ -1,11 +1,12 @@
 /****************************************
- * C-ploration 6 for CS 271
+ * C-ploration 8 for CS 271
  * 
  * [NAME] Nicholas Nyburg
  * [TERM] FALL 2025
  * 
  ****************************************/
 #include "parser.h"
+#include "error.h"
 
 /* Function: strip
  * -------------
@@ -62,6 +63,39 @@ char *extract_label(const char *line, char *label) {
     return label;
 }
 
+void add_predefined_symbols(void) {
+    for (int i = 0; i < NUM_PREDEFINED_SYMBOLS; i++) {
+        const predefined_symbol *ps = &predefined_symbols[i];
+        symtable_insert((char *)ps->name, (hack_addr)ps->address);
+    }
+}
+
+bool parse_A_instruction(const char *line, a_instruction *instr) {
+
+    char *s = malloc(strlen(line));
+    strcpy(s, line + 1);
+
+    char *s_end = NULL;
+    long result = strtol(s, &s_end, 10);
+
+    if (s == s_end) {
+        instr->data.label = malloc(strlen(s) + 1);
+        strcpy(instr->data.label, s);
+        instr->is_addr = false;
+    }
+
+    else if(*s_end != 0){
+        return false;
+    }
+
+    else{
+        instr->data.address = result;
+        instr->is_addr = true;
+    }
+
+    return true;
+}
+
 /* Function: parse
  * -------------
  * iterate each line in the file and strip whitespace and comments. 
@@ -74,27 +108,71 @@ void parse(FILE * file){
 	
 	char line[MAX_LINE_LENGTH];
     hack_addr rom_addr = 0;
+    unsigned int line_num = 0;        
+    unsigned int instr_num = 0;     
+    instruction instr;
+
+
+    add_predefined_symbols();
 
     while (fgets(line, sizeof(line), file) != NULL) {
+        line_num++;                   
+
+        if (instr_num > MAX_INSTRUCTIONS) {                      
+            exit_program(EXIT_TOO_MANY_INSTRUCTIONS,             
+                        MAX_INSTRUCTIONS + 1);                   
+        }
+
         strip(line);
         if (!*line) {
             continue;
         }
+
         if (is_label(line)){
             char lbl[MAX_LABEL_LENGTH + 1];
             extract_label(line, lbl);
-            strcpy(line, lbl);
+
+            if (!isalpha((unsigned char)lbl[0])) {               
+                exit_program(EXIT_INVALID_LABEL, line_num, line);
+            }
+
+            // duplicate symbol
+            if (symtable_find(lbl) != NULL) {                    
+                exit_program(EXIT_SYMBOL_ALREADY_EXISTS,
+                            line_num, line);
+            }
+
             symtable_insert(lbl, rom_addr);
+            continue;                                           
         }
-        else if (is_Atype(line)){
+
+        instr_type inst_type = INSTR_INVALID;                    
+
+        if (is_Atype(line)){
+            //inst_type = INSTR_A;                                 
             rom_addr++;
+            if (!parse_A_instruction(line, &instr.as.a)){
+                exit_program(EXIT_INVALID_A_INSTR, line_num, line);
+            }
+            instr.itype = INSTR_A;
         }
         else if (is_Ctype(line)) {
+            inst_type = INSTR_C;                                 
             rom_addr++;
         }
-        //printf("%c  %s\n", inst_type, line);
+
+        char inst_char = '?';                                    
+        if (inst_type == INSTR_A) {
+            inst_char = 'A';
+        } else if (inst_type == INSTR_C) {
+            inst_char = 'C';
+        }
+
+        //printf("%u: %c  %s\n", instr_num, inst_char, line);      
+
+        instr_num++;                                             
+        
     }
-	
 }
 
 bool is_Atype(const char *line) {

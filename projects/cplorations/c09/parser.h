@@ -1,19 +1,22 @@
 /****************************************
- * C-ploration 8 for CS 271
+ * C-ploration 9 for CS 271
  * 
  * [NAME] Nicholas Nyburg
  * [TERM] FALL 2025
  * 
  ****************************************/
+#ifndef PARSER_H
+#define PARSER_H
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <stdbool.h>
 #include <stdint.h>
-#include "symtable.h"
 
 #include "symtable.h"
+#include "hack.h"
 #include "error.h"
 
 #define MAX_LINE_LENGTH  200
@@ -59,5 +62,10 @@ typedef struct instruction {
         a_instruction a;
         c_instruction c;
     } as;
-    instr_type type;
+    instr_type itype;
 } instruction;
+
+void add_predefined_symbols(void);
+bool parse_A_instruction(const char *line, a_instruction *instr);
+
+#endif

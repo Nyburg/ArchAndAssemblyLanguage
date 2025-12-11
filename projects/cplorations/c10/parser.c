@@ -1,5 +1,5 @@
 /****************************************
- * Project 6 for CS 271
+ * C-ploration 8 for CS 271
  * 
  * [NAME] Nicholas Nyburg
  * [TERM] FALL 2025
@@ -7,9 +7,6 @@
  ****************************************/
 #include "parser.h"
 #include "error.h"
-#include <limits.h>
-
-static hack_addr next_variable_address = 16;
 
 /* Function: strip
  * -------------
@@ -183,6 +180,12 @@ int parse(FILE * file, instruction *instructions){
             }
             instr.itype = INSTR_A;
 
+            if (instr.as.a.is_addr) {
+                printf("A: %d\n", instr.as.a.data.address);
+            } else {
+                printf("A: %s\n", instr.as.a.data.label);
+            }
+
         } else if (is_Ctype(line)) {
             rom_addr++;
 
@@ -202,6 +205,11 @@ int parse(FILE * file, instruction *instructions){
             }
 
             instr.itype = INSTR_C;
+
+            printf("C: d=%d, c=%d, j=%d\n",
+                   instr.as.c.dest,
+                   instr.as.c.comp,
+                   instr.as.c.jump);
         }
 
         instructions[instr_num++] = instr;
@@ -226,66 +234,4 @@ bool is_Ctype(const char *line) {
     if (is_Atype(line)) return false;
     if (is_label(line)) return false;
     return true;
-}
-
-opcode instruction_to_opcode(c_instruction instr) {
-    opcode op = 0;
-    op |= (7 << 13);
-    op |= ((instr.a & 0x1) << 12);
-    op |= ((instr.comp & 0x3F) << 6);
-    op |= ((instr.dest & 0x7) << 3);
-    op |= (instr.jump & 0x7);
-    return op;
-}
-
-void assemble(const char *file_name, instruction *instructions, int num_instructions) {
-    char out_name[1024];
-
-    snprintf(out_name, sizeof(out_name), "%s.hack", file_name);
-
-    FILE *out = fopen(out_name, "w");
-    if (!out) {
-        exit_program(EXIT_CANNOT_OPEN_FILE, out_name);
-    }
-
-    for (int i = 0; i < num_instructions; i++) {
-        instruction instr = instructions[i];
-        opcode op = 0;
-
-        if (instr.itype == INSTR_A) {
-            a_instruction *a = &instructions[i].as.a;
-
-            if (a->is_addr) {
-                op = (opcode)a->data.address;
-            } else {
-                char *label = a->data.label;
-
-                hack_addr addr;
-                Symbol *entry = symtable_find(label);
-
-                if (entry != NULL) {
-                    addr = entry->addr;
-                } else {
-                    addr = next_variable_address++;
-                    symtable_insert(label, addr);
-                }
-
-                op = (opcode)addr;
-
-                free(label);
-                a->data.label = NULL;
-                a->is_addr = true;
-            }
-        }
-        else if (instr.itype == INSTR_C) {
-            op = instruction_to_opcode(instr.as.c);
-        } else {
-            continue;
-        }
-
-        fprintf(out, "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c\n",
-                OPCODE_TO_BINARY(op));
-    }
-
-    fclose(out);
 }
