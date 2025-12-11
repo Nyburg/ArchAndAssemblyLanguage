@@ -235,3 +235,13 @@ bool is_Ctype(const char *line) {
     if (is_label(line)) return false;
     return true;
 }
+
+opcode instruction_to_opcode(c_instruction instr) {
+    opcode op = 0;
+    op |= (7 << 13);
+    op |= ((instr.a & 0x1) << 12);
+    op |= ((instr.comp & 0x3F) << 6);
+    op |= ((instr.dest & 0x7) << 3);
+    op |= (instr.jump & 0x7);
+    return op;
+}
