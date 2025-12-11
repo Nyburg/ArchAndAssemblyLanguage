@@ -31,7 +31,7 @@ int main(int argc, const char *argv[])
 
     (void)num_instructions;
 
-    //symtable_print_labels();
+    assemble(argv[1], instructions, num_instructions);
 
     free(instructions);
     fclose(fp);
