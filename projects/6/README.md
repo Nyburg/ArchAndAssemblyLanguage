@@ -7,9 +7,9 @@ Driver program:
 
 How to build:
     From the Project 6 Directory, run: 
-        make
+        `make`.
     This compiles all necessary files and produces the executable: 
-        assembler
+        `assembler`
 
 To clean build artifacts:
     Run:
